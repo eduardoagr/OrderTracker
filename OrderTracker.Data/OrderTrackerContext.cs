@@ -11,6 +11,7 @@ namespace OrderTracker.Data {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Driver> Drivers { get; set; }
+
         public DbSet<Manufacturer> Manufacturers { get; set; }
 
 

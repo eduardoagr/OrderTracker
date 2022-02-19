@@ -5,8 +5,6 @@ using OrderTracker.Data;
 using OrderTracker.Model;
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace OrderTracker.Controllers {
@@ -99,33 +97,34 @@ namespace OrderTracker.Controllers {
             return result;
         }
 
+        //This is for debug purposes only
 
         /// <summary>
-        /// Adds a driver
+        /// Adds a hard coded Driver
         /// </summary>
-        /// <param name="name"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("AddDriver")]
-        public bool AddDriver(Driver driver) {
-            var result = uow.AddDriver(driver);
+        public bool AddHardCodedDriver() {
+            Driver driver = new Driver() {
+
+                FirstName = "Mat",
+                LastName = "Franco",
+                Rating = 4
+
+
+            };
+
+            var result = uow.AddDirver(driver);
 
             return result;
         }
-
-
-        /// <summary>
-        /// Gets a driver by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet]
         [Route("GetDriverById/{id}")]
-        public IQueryable<Driver> GetDriverById(int id) {
+        public IQueryable<Driver> GetDrivers(int id) {
 
             var result = uow.GetDriverById(id);
             return result;
         }
-
     }
 }

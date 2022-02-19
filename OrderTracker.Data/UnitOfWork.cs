@@ -21,44 +21,8 @@ namespace OrderTracker.Data {
                 return false;
             }
 
-
-        }
-        public bool AddDriver(Driver driver) {
-            try {
-                _context.Drivers.Add(driver);
-                _context.SaveChanges();
-                return true;
-            } catch (Exception) {
-
-                return false;
-            }
-
-
-        }
-        public bool RemoveDriver(Driver driver) {
-            try {
-                _context.Drivers.Remove(driver);
-                _context.SaveChanges();
-                return true;
-            } catch (Exception) {
-                return false;
-            }
-
-
         }
 
-        public bool UpdateDriver(Driver driver) {
-            try {
-                _context.Drivers.Update(driver);
-                _context.SaveChanges();
-                return true;
-            } catch (Exception) {
-
-                return false;
-            }
-
-
-        }
 
         public IQueryable<Customer> GetCustomerById(int id) {
             return _context.Customers.Where(c => c.Id == id);
@@ -103,8 +67,47 @@ namespace OrderTracker.Data {
             return true;
         }
 
+        public bool AddDirver(Driver driver) {
+
+            try {
+                _context.Drivers.Add(driver);
+                _context.SaveChanges();
+                return true;
+            } catch (Exception) {
+
+                return false;
+            }
+
+        }
+
+        public bool RemoveDriver(Driver driver) {
+
+            try {
+                _context.Drivers.Remove(driver);
+                _context.SaveChanges();
+                return true;
+            } catch (Exception) {
+
+                return false;
+            }
+
+        }
+
+        public bool UpdateDiver(Driver driver) {
+
+            try {
+                _context.Drivers.Update(driver);
+                _context.SaveChanges();
+                return true;
+            } catch (Exception) {
+
+                return false;
+            }
+
+        }
+
         public IQueryable<Driver> GetDriverById(int id) {
-            return _context.Drivers.Where(c => c.ID == id);
+            return _context.Drivers.Where(c => c.Id == id);
         }
     }
 }

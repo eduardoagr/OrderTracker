@@ -9,8 +9,8 @@ using OrderTracker.Data;
 namespace OrderTracker.Data.Migrations
 {
     [DbContext(typeof(OrderTrackerContext))]
-    [Migration("20220216004048_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220214225005_ItemManuAddtion")]
+    partial class ItemManuAddtion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,26 +60,6 @@ namespace OrderTracker.Data.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("OrderTracker.Model.Driver", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Drivers");
-                });
-
             modelBuilder.Entity("OrderTracker.Model.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -127,10 +107,12 @@ namespace OrderTracker.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DriverId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -148,6 +130,18 @@ namespace OrderTracker.Data.Migrations
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("OrderTracker.Model.Order", b =>
+                {
+                    b.HasOne("OrderTracker.Model.Customer", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId");
+                });
+
+            modelBuilder.Entity("OrderTracker.Model.Customer", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("OrderTracker.Model.Manufacturer", b =>

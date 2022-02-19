@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OrderTracker.Model {
     public class Customer {
@@ -29,8 +28,8 @@ namespace OrderTracker.Model {
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zip")]
         public string ZIP { get; set; }
 
-        [Required]
         [Phone]
+        [Required]
         public string PhoneNumber { get; set; }
 
         [EmailAddress]

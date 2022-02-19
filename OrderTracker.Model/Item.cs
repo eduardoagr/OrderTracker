@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OrderTracker.Model
-{
-    public class Item
-    {
+namespace OrderTracker.Model {
+    public class Item {
         public int Id { get; set; }
         public string Name { get; set; }
         public ItemType ItemType { get; set; }
@@ -18,8 +11,7 @@ namespace OrderTracker.Model
         public Manufacturer Manufacturer { get; set; }
     }
 
-    public enum ItemType
-    {
+    public enum ItemType {
         Grocery,
         GeneralMerch,
         Pharmaceutical

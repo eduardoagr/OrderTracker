@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderTracker.Data;
 
 namespace OrderTracker.Data.Migrations
 {
     [DbContext(typeof(OrderTrackerContext))]
-    partial class OrderTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20220219161540_AddDriver")]
+    partial class AddDriver
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

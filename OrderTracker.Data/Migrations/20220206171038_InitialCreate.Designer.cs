@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderTracker.Data;
 
 namespace OrderTracker.Data.Migrations
 {
     [DbContext(typeof(OrderTrackerContext))]
-    partial class OrderTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20220206171038_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,26 +60,6 @@ namespace OrderTracker.Data.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("OrderTracker.Model.Driver", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Drivers");
-                });
-
             modelBuilder.Entity("OrderTracker.Model.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -87,7 +69,7 @@ namespace OrderTracker.Data.Migrations
                     b.Property<int>("ItemType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ManufacturerId")
+                    b.Property<int?>("ManufacturerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -125,10 +107,12 @@ namespace OrderTracker.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DriverId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -136,10 +120,8 @@ namespace OrderTracker.Data.Migrations
             modelBuilder.Entity("OrderTracker.Model.Item", b =>
                 {
                     b.HasOne("OrderTracker.Model.Manufacturer", "Manufacturer")
-                        .WithMany("Items")
-                        .HasForeignKey("ManufacturerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ManufacturerId");
 
                     b.HasOne("OrderTracker.Model.Order", null)
                         .WithMany("Items")
@@ -148,9 +130,16 @@ namespace OrderTracker.Data.Migrations
                     b.Navigation("Manufacturer");
                 });
 
-            modelBuilder.Entity("OrderTracker.Model.Manufacturer", b =>
+            modelBuilder.Entity("OrderTracker.Model.Order", b =>
                 {
-                    b.Navigation("Items");
+                    b.HasOne("OrderTracker.Model.Customer", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId");
+                });
+
+            modelBuilder.Entity("OrderTracker.Model.Customer", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("OrderTracker.Model.Order", b =>
