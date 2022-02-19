@@ -127,17 +127,19 @@ namespace OrderTracker.Tests {
                 LastName = "Cameron",
                 Rating = 4
             };
+            bool result = uow.UpdateDiver(driver);
 
-            var sut = _context.Customers.Count();
 
-            //if (sut != null) {
-            //    sut.FirstName = driver.FirstName;
-            //    sut.LastName = driver.LastName;
-            //    sut.Rating = driver.Rating;
-            //    bool result = uow.UpdateDiver(sut);
-            //    Assert.AreEqual(true, result);
+            Driver sut = _context.Drivers.FirstOrDefault(x => x.Id == driver.Id);
 
-            //}
+            if (sut != null) {
+                sut.FirstName = driver.FirstName;
+                sut.LastName = driver.LastName;
+                sut.Rating = driver.Rating;
+
+                Assert.AreEqual(true, result);
+
+            }
 
             var qDrive = _context.Drivers.Where(q => q.Id == 1).FirstOrDefault();
 
