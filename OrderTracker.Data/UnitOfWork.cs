@@ -1,77 +1,58 @@
 ﻿using OrderTracker.Model;
+
 using System;
 using System.Linq;
 
-namespace OrderTracker.Data
-{
-    public class UnitOfWork : IUnitOfWork
-    {
+namespace OrderTracker.Data {
+    public class UnitOfWork : IUnitOfWork {
         private OrderTrackerContext _context;
 
-        public UnitOfWork(OrderTrackerContext context)
-        {
+        public UnitOfWork(OrderTrackerContext context) {
             _context = context;
         }
 
-        public bool AddCustomer(Customer customer)
-        {
-            try
-            {
+        public bool AddCustomer(Customer customer) {
+            try {
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
 
                 return false;
             }
 
 
         }
-        public bool AddDriver(Driver driver)
-        {
-            try
-            {
+        public bool AddDriver(Driver driver) {
+            try {
                 _context.Drivers.Add(driver);
                 _context.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
 
                 return false;
             }
 
 
         }
-        public bool RemoveDriver(Driver driver)
-        {
-            try
-            {
+        public bool RemoveDriver(Driver driver) {
+            try {
                 _context.Drivers.Remove(driver);
                 _context.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
-
+            } catch (Exception) {
                 return false;
             }
 
 
         }
 
-        public bool UpdateDriver(Driver driver)
-        {
-            try
-            {
+        public bool UpdateDriver(Driver driver) {
+            try {
                 _context.Drivers.Update(driver);
                 _context.SaveChanges();
                 return true;
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
 
                 return false;
             }
@@ -79,21 +60,16 @@ namespace OrderTracker.Data
 
         }
 
-        public IQueryable<Customer> GetCustomerById(int id)
-        {
+        public IQueryable<Customer> GetCustomerById(int id) {
             return _context.Customers.Where(c => c.Id == id);
         }
 
-        public bool AddItem(string itemName, ItemType itemType, int manufacturerId)
-        {
-            try
-            {
+        public bool AddItem(string itemName, ItemType itemType, int manufacturerId) {
+            try {
                 if (_context.Manufacturers.Where(m => m.Id == manufacturerId).Count() == 1
                     && _context.Items.Where(i => i.Name == itemName && i.ManufacturerId == manufacturerId).Count() == 0
-                    )
-                {
-                    Item item = new Item()
-                    {
+                    ) {
+                    Item item = new Item() {
                         Name = itemName,
                         ItemType = itemType,
                         ManufacturerId = manufacturerId
@@ -101,28 +77,23 @@ namespace OrderTracker.Data
 
                     _context.Add(item);
                     _context.SaveChanges();
-                    
+
                     return true;
                 }
 
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
 
                 throw;
             }
             return false;
         }
 
-        public bool AddManufacturer(string name)
-        {
-            if (_context.Manufacturers.Where(m => m.Name == name).Count() > 0)
-            {
+        public bool AddManufacturer(string name) {
+            if (_context.Manufacturers.Where(m => m.Name == name).Count() > 0) {
                 return false;
             }
 
-            Manufacturer manufacturer = new Manufacturer()
-            {
+            Manufacturer manufacturer = new Manufacturer() {
                 Name = name
             };
 
@@ -132,6 +103,8 @@ namespace OrderTracker.Data
             return true;
         }
 
-       
+        public IQueryable<Driver> GetDriverById(int id) {
+            return _context.Drivers.Where(c => c.ID == id);
+        }
     }
 }

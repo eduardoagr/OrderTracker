@@ -116,10 +116,10 @@ namespace OrderTracker.Tests {
 
         }
 
-
-
         [Test]
         public void UpdateDriver_ValidDriver_ReturnsTrue() {
+           
+            
             Driver driver = new Driver() {
                 ID = 1,
                 FirstName = "James",
@@ -127,10 +127,23 @@ namespace OrderTracker.Tests {
                 Rating = 4
             };
 
-            var result = uow.UpdateDriver(driver);
+            Driver sut = _context.Drivers.FirstOrDefault(x => x.ID == driver.ID);
+
+            if (sut != null)
+            {
+                sut.FirstName = driver.FirstName;
+                sut.LastName = driver.LastName;
+                sut.Rating = driver.Rating;
+                bool result = uow.UpdateDriver(sut);
+                Assert.AreEqual(true, result);
+
+            }            
 
             var qDrive = _context.Drivers.Where(q => q.ID == 1).FirstOrDefault();
-            Assert.AreSame(qDrive, driver);
+            
+            Assert.AreSame(qDrive.FirstName, driver.FirstName);
+            Assert.AreSame(qDrive.LastName, driver.LastName);
+            Assert.AreSame(qDrive.Rating, driver.Rating);
         }
     }
 }

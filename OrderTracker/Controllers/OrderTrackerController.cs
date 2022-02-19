@@ -1,34 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+
 using OrderTracker.Data;
 using OrderTracker.Model;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OrderTracker.Controllers
-{
+namespace OrderTracker.Controllers {
     [ApiController]
     [Route("[controller]")]
-    public class OrderTrackerController : ControllerBase
-    {
+    public class OrderTrackerController : ControllerBase {
 
 
         private readonly ILogger<OrderTrackerController> _logger;
         private string userId = "SYSTEM";
         private IUnitOfWork uow;
 
-        public OrderTrackerController(ILogger<OrderTrackerController> logger, IUnitOfWork _uow)
-        {
+        public OrderTrackerController(ILogger<OrderTrackerController> logger, IUnitOfWork _uow) {
             _logger = logger;
 
-            try
-            {
+            try {
                 uow = _uow;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
 
                 throw;
             }
@@ -42,25 +38,22 @@ namespace OrderTracker.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetCustomersById/{id}")]
-        public IQueryable<Customer> GetCustomerById(int id)
-        {
+        public IQueryable<Customer> GetCustomerById(int id) {
 
             var result = uow.GetCustomerById(id);
             return result;
         }
 
-        
+
         /// <summary>
         /// Adds a hardcoded customer
         /// </summary>
         /// <returns></returns>
         [HttpPost]
         [Route("AddCustomer")]
-        public bool AddHardCodedCustomer()
-        {
-            Customer customer = new Customer()
-            {
-            
+        public bool AddHardCodedCustomer() {
+            Customer customer = new Customer() {
+
                 FirstName = "George",
                 LastName = "Lucas",
                 StreetAddress = "123 Sesame Street",
@@ -84,8 +77,7 @@ namespace OrderTracker.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("AddManufacturer")]
-        public bool AddManufacturer(string name)
-        {
+        public bool AddManufacturer(string name) {
             var result = uow.AddManufacturer(name);
 
             return result;
@@ -101,11 +93,39 @@ namespace OrderTracker.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("AddItem")]
-        public bool AddItem(string itemName, ItemType itemType, int manufacturerId)
-        {
+        public bool AddItem(string itemName, ItemType itemType, int manufacturerId) {
             var result = uow.AddItem(itemName, itemType, manufacturerId);
 
             return result;
         }
+
+
+        /// <summary>
+        /// Adds a driver
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("AddDriver")]
+        public bool AddDriver(Driver driver) {
+            var result = uow.AddDriver(driver);
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Gets a driver by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetDriverById/{id}")]
+        public IQueryable<Driver> GetDriverById(int id) {
+
+            var result = uow.GetDriverById(id);
+            return result;
+        }
+
     }
 }

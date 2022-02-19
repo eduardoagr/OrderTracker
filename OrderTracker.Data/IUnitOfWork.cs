@@ -3,15 +3,18 @@
 using System.Linq;
 
 namespace OrderTracker.Data {
+
     public interface IUnitOfWork {
+
         public bool AddCustomer(Customer customer);
         public IQueryable<Customer> GetCustomerById(int id);
         public bool AddManufacturer(string name);
-
         public bool AddItem(string itemName, ItemType itemType, int manufacturerId);
         public bool AddDriver(Driver driver);
         public bool RemoveDriver(Driver driver);
         public bool UpdateDriver(Driver driver);
+        public IQueryable<Driver> GetDriverById(int id);
+
     }
 
 }
